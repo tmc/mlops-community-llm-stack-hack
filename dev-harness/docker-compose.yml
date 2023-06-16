@@ -2,54 +2,45 @@ version: '3'
 
 services:
 
-  # Use `yarn start` in the react-frontend directory to start the frontend.
-  # frontend:
+  # gateway:
   #   build:
-  #     context: ../react-frontend
+  #     context: ../gateway
+  #   restart: always
+  #   command:
+  #     - --dev
+  #     - --config
+  #     - config.yaml
+  #     - --supergraph
+  #     - supergraph.graphql
+  #       # - --log # uncomment these to do gateway debugging
+  #       # - debug
   #   ports:
-  #     - "3000:3000"
+  #     - "4000:4000"
+
+  # slack-monitor:
+  #   build:
+  #     context: ../slack-monitor
+  #   restart: always
+  #   ports:
+  #     - "8000:8000"
+  #   env_file: .env
+  #   environment:
+  #     OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
+  #     OTEL_EXPORTER_OTLP_INSECURE: "true"
   #   depends_on:
-  #     - gateway
+  #     - database
 
-  gateway:
-    build:
-      context: ../gateway
-    restart: always
-    command:
-      - --dev
-      - --config
-      - config.yaml
-      - --supergraph
-      - supergraph.graphql
-        # - --log # uncomment these to do gateway debugging
-        # - debug
-    ports:
-      - "4000:4000"
-
-  backend-a:
-    build:
-      context: ../graphene-backend
-    restart: always
-    ports:
-      - "8000:8000"
-    env_file: .env
-    environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
-      OTEL_EXPORTER_OTLP_INSECURE: "true"
-    depends_on:
-      - database
-
-  backend-b:
-    build:
-      context: ../go-graphql-backend
-    restart: always
-    ports:
-      - "8080:8080"
-    env_file: .env
-    environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
-    depends_on:
-      - database
+  # python-service:
+  #   build:
+  #     context: ../llm-stack-hack-python-service
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   env_file: .env
+  #   environment:
+  #     OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector:4317
+  #   depends_on:
+  #     - database
 
   database:
     image: postgres

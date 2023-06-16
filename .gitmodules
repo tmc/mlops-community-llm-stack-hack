@@ -1,0 +1,9 @@
+[submodule "visualizevectors"]
+	path = visualizevectors
+	url = https://github.com/pyInvenio/visualizevectors
+[submodule "llm-stack-hack-python-service"]
+	path = llm-stack-hack-python-service
+	url = https://github.com/tmc/llm-stack-hack-python-service
+[submodule "slack-monitor"]
+	path = slack-monitor
+	url = https://github.com/tmc/slackutil
